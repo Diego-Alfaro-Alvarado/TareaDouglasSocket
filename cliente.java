@@ -4,7 +4,7 @@ import java.io.*;
 import java.net.*;
 import javax.swing.*;
 
-public class TCPClient {
+public class cliente {
 
     public static void main(String argv[]) {
         JFrame ventana = new JFrame("Requerimientos del Cliente");
