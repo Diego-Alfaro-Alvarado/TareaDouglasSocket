@@ -29,8 +29,12 @@ public class cliente {
 
         enviar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                 String sentence = inFromUser.getText();
                 try {
-                    String sentence = inFromUser.getText();
+                    if (sentence.trim().isEmpty()) {//resticción para no enviar mensajes vacios al servidor 
+                     JOptionPane.showMessageDialog(ventana,"No se puede enviar un mensaje vacío."); 
+                     return;
+                    }
                     Socket clientSocket = new Socket("localhost", 6789);
 
                     DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
@@ -45,6 +49,7 @@ public class cliente {
                 } catch (Exception ex) {
                     respuestaServidor.setText("Error: " + ex.getMessage());
                 }
+                inFromUser.setText("");//limpiar automaticamente el mensaje del cliente por si ocupa escribir otro
             }
         });
     }
