@@ -61,14 +61,16 @@ public class servidor {
     // Se hacen 2 metodos para que el código quede más organizado 
     //Estos métodos permiten que se convierta a mayúscula y ver cuantas letras tiene la palabra
     public static String convertirMensaje(String mensaje) { 
-      String converMayuscula;
-      int contador;
-        if (mensaje ==null) return "";
-        converMayuscula = mensaje.toUpperCase();
-        contador = contar(mensaje);
-        return converMayuscula + "(" + contador + "letras)";
-      } 
+      if (mensaje == null) return "";
 
+  String converMayusculas = mensaje.toUpperCase();
+  int letras = contar(mensaje);
+  int palabras = contPalabras(mensaje);
+  String inverso = invertir(mensaje);
+
+  return converMayusculas + " (" + letras + " letras, " + palabras + " palabras) -----> Inverso: " + inverso;
+      } 
+      // Este metodo cuenta las letras del mensaje 
       public static int contar(String text) {
         int conta =0;
         for (char cont : text.toCharArray()){
@@ -77,6 +79,15 @@ public class servidor {
           }
         }
         return conta;
+      }
+      //Cuenta las palabras que tiene el mensaje
+      public static int contPalabras (String text) {
+        if (text ==null || text.trim().isEmpty()) return 0;
+        return text.trim().split("\\s+").length;
+      } 
+      // Invierte el texto 
+      public static String invertir(String text) {
+        return new StringBuilder(text).reverse().toString();
       }
 }
 
