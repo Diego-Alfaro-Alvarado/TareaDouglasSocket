@@ -34,6 +34,13 @@ public class cliente {
                     if (sentence.trim().isEmpty()) {//resticción para no enviar mensajes vacios al servidor 
                      JOptionPane.showMessageDialog(ventana,"No se puede enviar un mensaje vacío."); 
                      return;
+                    } 
+                    // Se verifica el servidor antes de establecer un a conexión
+                    try (Socket testSocket = new Socket()) {
+                         testSocket.connect(new InetSocketAddress("localhost", 6789), 1000);
+                    } catch (IOException ex) {
+                        JOptionPane.showMessageDialog(ventana, "El servidor no se encuentra disponible.");
+                        return;
                     }
                     Socket clientSocket = new Socket("localhost", 6789);
 

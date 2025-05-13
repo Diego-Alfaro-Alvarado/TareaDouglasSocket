@@ -34,7 +34,7 @@ public class servidor {
       // Un hilo para que la interfaz gráfica no se congele mientras corre 
       Thread servidor = new Thread(()->{
          String clientSentence;  
-         String capitalizedSentence; 
+         String nuevocamb; // nueva variable para aplicar el nuevo cambio 
         try {
             ServerSocket welcomeSocket = new ServerSocket(6789);
             while (true) {
@@ -44,12 +44,12 @@ public class servidor {
                 DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
 
                 clientSentence = inFromClient.readLine();  
-                capitalizedSentence = clientSentence.toUpperCase() + '\n';  
+                nuevocamb = convertirMensaje(clientSentence);  
 
                 texRecibido.setText(clientSentence);
-                texEnvio.setText(capitalizedSentence.trim());
+                texEnvio.setText(nuevocamb);
 
-                outToClient.writeBytes(capitalizedSentence);
+                outToClient.writeBytes(nuevocamb + '\n');
                 connectionSocket.close();
             }
         } catch(IOException e) {
@@ -57,7 +57,27 @@ public class servidor {
         }
       });
       servidor.start(); 
-    }
+    } 
+    // Se hacen 2 metodos para que el código quede más organizado 
+    //Estos métodos permiten que se convierta a mayúscula y ver cuantas letras tiene la palabra
+    public static String convertirMensaje(String mensaje) { 
+      String converMayuscula;
+      int contador;
+        if (mensaje ==null) return "";
+        converMayuscula = mensaje.toUpperCase();
+        contador = contar(mensaje);
+        return converMayuscula + "(" + contador + "letras)";
+      } 
+
+      public static int contar(String text) {
+        int conta =0;
+        for (char cont : text.toCharArray()){
+          if (Character.isLetter(cont)) {
+            conta ++;
+          }
+        }
+        return conta;
+      }
 }
 
       
